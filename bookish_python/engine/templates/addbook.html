@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<div class="container body-content">
+        <h1>Add Book Form</h1>
+<p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <div class="parent">
+                <fieldset>
+                        <form action="/books2" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Title: </legend>
+                                <input type="text" name="Title">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Author: </legend>
+                                <input type="text" name="Author">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Total Copies: </legend>
+                                <input type="text" name="Total_Copies">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Available: </legend>
+                                <input type="text" name="Available">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Submit" />
+                        </div>
+                        </form>
+                </fieldset>
+        </div>
+
+</div>
+{% endblock %}

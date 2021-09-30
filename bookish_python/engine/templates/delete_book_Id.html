@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<div class="container body-content">
+        <h1>Delete Book Form</h1>
+<p></p>
+<div class="scrollable">
+  <table>
+      <tr>
+          {% for key in Book_data[0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+      </tr>
+
+    {% for line in Book_data %}
+    <tr>
+        {% for key in Book_data[0] %}
+      <td> {{line[key]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+    <p></p>
+        <p>Please Enter the ID of the Book that you want to Delete:</p>
+        <div class="parent">
+                <fieldset>
+                        <form action="/books4" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Book ID</legend>
+                                <input type="text" name="BookId">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Delete" />
+                        </div>
+                        </form>
+                </fieldset>
+        </div>
+
+</div>
+{% endblock %}

@@ -116,6 +116,7 @@ def run_UI(Books, Members, BookLoans):
 
                 elif User_Input == '3':
                         books = query_user_4_input(Books)
+                        print(books)
                         Books.addData(books)
                         print('Thanks, book added')
 

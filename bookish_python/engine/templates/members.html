@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Bus Information{% endblock %}
+{% block content %}
+<div class="container body-content">
+    <div class="jumbotron">
+        <h1>Members</h1>
+        <p class="lead">I think this might just be working!</p>
+    </div>
+
+<div class="scrollable">
+  <table>
+      <tr>
+          {% for key in Member_data[0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+      </tr>
+
+    {% for line in Member_data %}
+    <tr>
+        {% for key in Member_data[0] %}
+      <td> {{line[key]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+  </table>
+
+</div>
+<p></p>
+<div class="parent">
+    <div class="child inline-block-child">
+        <form action="/" method="get">
+        <input type="submit" value="This is a button" />
+    </form>
+    </div>
+    <div class="child inline-block-child">
+        <form action="/" method="get">
+        <input type="submit" value="Dear God" />
+    </form>
+    </div>
+    <div class="child inline-block-child">
+        <form action="/" method="get">
+        <input type="submit" value="There's More" />
+    </form>
+    </div>
+
+</div>
+
+
+</div>
+{% endblock %}

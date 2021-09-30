@@ -2,15 +2,15 @@ from database_creator import DataBase
 
 
 def initialise_databases():
-        Books = DataBase('Books', ['BookId', 'Title', 'Author'],
-                         ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT', 'TEXT'])
+        Books = DataBase('Books', ['BookId', 'Title', 'Author', 'TotalCopies', 'Available'],
+                         ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT', 'TEXT', 'INTEGER', 'INTEGER'])
         Books.createTable()
 
         BookLoans = DataBase('BookLoans', ['BookId', 'MemberId'], ['INTEGER', 'INTEGER'])
         BookLoans.createTable()
 
-        Members = DataBase('Members', ['MemberId', 'FirstName', 'LastName'],
-                           ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT', 'TEXT'])
+        Members = DataBase('Members', ['MemberId', 'FirstName', 'LastName'], ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT',
+                                                                              'TEXT'])
         Members.createTable()
 
         return Books, Members, BookLoans
@@ -29,13 +29,13 @@ def input_dummy_data(Books, Members, BookLoans):
         Members.addData(users)
 
         books = [
-                {'Title': 'The Lord of the Rings', 'Author': 'J.R.R Tolkien'},
-                {'Title': 'Harry Potter', 'Author': 'J.K Rowling'},
-                {'Title': 'The Colour of Magic', 'Author': 'Terry Pratchett'},
-                {'Title': 'The Martian', 'Author': 'Andy Weir'},
-                {'Title': 'The Bible', 'Author': 'God'},
-                {'Title': 'The Hitchhikers Guide to the Galaxy', 'Author': 'Douglas Adams'},
-                {'Title': 'Henry V', 'Author': 'William Shakespeare'},
+                {'Title': 'The Lord of the Rings', 'Author': 'J.R.R Tolkien', 'TotalCopies': 1, 'Available': 0},
+                {'Title': 'Harry Potter', 'Author': 'J.K Rowling', 'TotalCopies': 1, 'Available': 0},
+                {'Title': 'The Colour of Magic', 'Author': 'Terry Pratchett', 'TotalCopies': 1, 'Available': 1},
+                {'Title': 'The Martian', 'Author': 'Andy Weir', 'TotalCopies': 1, 'Available': 0},
+                {'Title': 'The Bible', 'Author': 'God', 'TotalCopies': 1, 'Available': 1},
+                {'Title': 'The Hitchhikers Guide to the Galaxy', 'Author': 'Douglas Adams', 'TotalCopies': 1, 'Available': 1},
+                {'Title': 'Henry V', 'Author': 'William Shakespeare', 'TotalCopies': 1, 'Available': 1},
                 ]
 
         Books.addData(books)
@@ -47,6 +47,54 @@ def input_dummy_data(Books, Members, BookLoans):
                 ]
 
         BookLoans.addData(loans)
+
+
+# def initialise_databases():
+#         Books = DataBase('Books', ['BookId', 'Title', 'Author'],
+#                          ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT', 'TEXT'])
+#         Books.createTable()
+#
+#         BookLoans = DataBase('BookLoans', ['BookId', 'MemberId'], ['INTEGER', 'INTEGER'])
+#         BookLoans.createTable()
+#
+#         Members = DataBase('Members', ['MemberId', 'FirstName', 'LastName'],
+#                            ['INTEGER PRIMARY KEY AUTOINCREMENT', 'TEXT', 'TEXT'])
+#         Members.createTable()
+#
+#         return Books, Members, BookLoans
+#
+#
+# def input_dummy_data(Books, Members, BookLoans):
+#         users = [
+#                 {'FirstName': 'Jane', 'LastName': 'Goodall'},
+#                 {'FirstName': 'Rachel', 'LastName': 'Carson'},
+#                 {'FirstName': 'Barry', 'LastName': 'Bishop'},
+#                 {'FirstName': 'Trystan', 'LastName': 'Jones'},
+#                 {'FirstName': 'Agent', 'LastName': 'Smith'},
+#                 {'FirstName': 'Jane', 'LastName': 'Doe'}
+#                 ]
+#
+#         Members.addData(users)
+#
+#         books = [
+#                 {'Title': 'The Lord of the Rings', 'Author': 'J.R.R Tolkien'},
+#                 {'Title': 'Harry Potter', 'Author': 'J.K Rowling'},
+#                 {'Title': 'The Colour of Magic', 'Author': 'Terry Pratchett'},
+#                 {'Title': 'The Martian', 'Author': 'Andy Weir'},
+#                 {'Title': 'The Bible', 'Author': 'God'},
+#                 {'Title': 'The Hitchhikers Guide to the Galaxy', 'Author': 'Douglas Adams'},
+#                 {'Title': 'Henry V', 'Author': 'William Shakespeare'},
+#                 ]
+#
+#         Books.addData(books)
+#
+#         loans = [
+#                 {'BookId': '1', 'MemberId': '1'},
+#                 {'BookId': '4', 'MemberId': '1'},
+#                 {'BookId': '2', 'MemberId': '2'}
+#                 ]
+#
+#         BookLoans.addData(loans)
 
 
 def delete_all_tables(Books, Members, BookLoans):
@@ -185,7 +233,6 @@ def edit_entry(Books):
                         User_Edit = input(f'\nEnter new {Books.fields[i]}: ')
                         user_edit[f'{Books.fields[i]}'] = User_Edit
 
-                Books.editData(user_edit, BookID)
                 print('Book/Member Edited')
         else:
                 print('Book/Member could not be found')
@@ -204,6 +251,8 @@ def delete_entry(Books):
 
                 User_Input = input(f'Would you like to delete this entry? y/n: ')
                 if User_Input == 'y':
+                        print(BookID)
+                        print(type(BookID))
                         Books.deleteData(BookID)
                 print('Book/Member Deleted')
 
@@ -251,7 +300,6 @@ def main():
         Books, Members, BookLoans = initialise_databases()
         Book_data = Books.getAllData()
         displayData(Book_data, Books)
-        # run_UI(Books, Members, BookLoans)
-
+        run_UI(Books, Members, BookLoans, '5')
 
 # main()

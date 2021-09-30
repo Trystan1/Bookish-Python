@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<div class="container body-content">
+        <h1>Edit Book Form</h1>
+<p></p>
+        <p></p>
+        <div class="parent">
+                <fieldset>
+                        <form action="/books3" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Title: </legend>
+                                <input type="text" name="Title" value="{{Book_data[0]['Title']}}">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Author: </legend>
+                                <input type="text" name="Author" value="{{Book_data[0]['Author']}}">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Total Copies: </legend>
+                                <input type="text" name="Total_Copies" value="{{Book_data[0]['TotalCopies']}}">
+                        </div>
+                        <div class="child inline-block-child">
+                                <legend>Available: </legend>
+                                <input type="text" name="Available" value="{{Book_data[0]['Available']}}">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Submit" />
+                                <input type="hidden" name="BookID" value="{{BookId}}">
+                        </div>
+                        </form>
+                </fieldset>
+        </div>
+
+</div>
+{% endblock %}

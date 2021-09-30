@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<div class="container body-content">
+
+    <div class="jumbotron">
+        <h1>Books</h1>
+        <p class="lead">Hello, is this thing on?</p>
+    </div>
+
+<div class="scrollable">
+  <table>
+      <tr>
+          {% for key in Book_data[0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+      </tr>
+
+    {% for line in Book_data %}
+    <tr>
+        {% for key in Book_data[0] %}
+      <td> {{line[key]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+  </table>
+
+</div>
+<p></p>
+<div class="parent">
+    <div class="child inline-block-child">
+        <form action="/addBook" method="get">
+        <input type="submit" value="Add a Book" />
+    </form>
+    </div>
+    <div class="child inline-block-child">
+        <form action="/editBookId" method="get">
+        <input type="submit" value="Edit the Details of a Book" />
+    </form>
+    </div>
+    <div class="child inline-block-child">
+        <form action="/deleteBookId" method="get">
+        <input type="submit" value="Delete a Book" />
+    </form>
+    </div>
+
+</div>
+
+</div>
+{% endblock %}
