@@ -125,6 +125,22 @@ class DataBase:
 
         cursor.execute(sql_command, edits)
         conn.commit()
+        conn.close
+
+    def editAvailable(self, crement, ID):
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        data = self.findMatchingID(ID)
+        currentVal = int(data[0]['Available'])
+
+        sql_command = f"""UPDATE {self.name}"""
+        sql_command += f"""\nSET """
+        sql_command += f"""{self.fields[4]}={str((crement*1)+currentVal)}"""
+        sql_command += f"""\nWHERE {self.fields[0]} = {ID};"""
+
+        cursor.execute(sql_command)
+        conn.commit()
         conn.close()
 
     def deleteData(self, ID):
@@ -150,12 +166,11 @@ class DataBase:
         data = []
         for row in rows:
             data_row = {}
+            data_row['MemberID'] = check_User
             for i in range(0, len(row)):
                 data_row[f'{self.fields[i]}'] = row[i]
 
             data.append(data_row)
-
-        # print(data)
 
         conn.commit()
         conn.close()

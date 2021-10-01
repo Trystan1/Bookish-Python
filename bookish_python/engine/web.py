@@ -8,7 +8,62 @@ Books, Members, BookLoans = initialise_databases()
 @app.route("/")
 def homepage():
 
-    return render_template('homepage.html')
+    Loan_data = []
+    Member_data = Members.getAllData()
+    for row in Member_data:
+        check_User = str(row['MemberId'])
+        Loan_data_line = Books.checkLoans(check_User)
+        Loan_data.append(Loan_data_line)
+
+    # remove blanks lists in list of loans
+    Loan_data = [ele for ele in Loan_data if ele != []]
+
+    return render_template('homepage.html', Loan_data=Loan_data)
+
+@app.route("/2")
+def homepage2():
+
+    # check-in
+    BookID = request.args.get('BookID')
+    MemberID = request.args.get('MemberID')
+    BookLoans.deleteLine(BookID, MemberID)
+    Books.editAvailable(1, BookID)
+
+    Loan_data = []
+    Member_data = Members.getAllData()
+    for row in Member_data:
+        check_User = str(row['MemberId'])
+        Loan_data_line = Books.checkLoans(check_User)
+        Loan_data.append(Loan_data_line)
+
+    # remove blanks lists in list of loans
+    Loan_data = [ele for ele in Loan_data if ele != []]
+
+    return render_template('homepage.html', Loan_data=Loan_data)
+
+
+@app.route("/3")
+def homepage3():
+
+    # check-out
+    BookID = request.args.get('BookID')
+    MemberID = request.args.get('MemberID')
+
+    loan = [{BookLoans.fields[0]: BookID, BookLoans.fields[1]: MemberID}]
+    BookLoans.addData(loan)
+    Books.editAvailable(-1, BookID)
+
+    Loan_data = []
+    Member_data = Members.getAllData()
+    for row in Member_data:
+        check_User = str(row['MemberId'])
+        Loan_data_line = Books.checkLoans(check_User)
+        Loan_data.append(Loan_data_line)
+
+    # remove blanks lists in list of loans
+    Loan_data = [ele for ele in Loan_data if ele != []]
+
+    return render_template('homepage.html', Loan_data=Loan_data)
 
 
 @app.route("/books")
@@ -50,8 +105,6 @@ def books3():
 def books4():
 
     BookID = str(request.args.get('BookId'))
-    print(BookID)
-    print(type(BookID))
     Books.deleteData(BookID)
 
     Book_data = Books.getAllData()
@@ -87,6 +140,22 @@ def deleteBookEntry():
 def members():
     Member_data = Members.getAllData()
     return render_template('members.html', Member_data=Member_data)
+
+
+@app.route("/checkin")
+def checkin():
+
+    MemberID = str(request.args.get('MemberID'))
+    Loan_data = Books.checkLoans(MemberID)
+
+    return render_template('checkin.html', Loan_data=Loan_data, MemberID=MemberID)
+
+
+@app.route("/checkout")
+def checkout():
+
+    Book_data = Books.getAllData()
+    return render_template('checkout.html', Book_data=Book_data)
 
 
 if __name__ == "__main__":

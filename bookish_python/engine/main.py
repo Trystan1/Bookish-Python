@@ -74,6 +74,25 @@ def displayData(data, Books):
                 print(data_statement)
 
 
+def displayLoans(data, Books):
+
+        # print field headings
+        print(f'\n')
+        statement = ''
+        for i in range(0, 3):
+                statement += f'{Books.fields[i]: <40}'
+        print(statement)
+
+        for i in range(0, len(data)):
+                data_statement = ''
+                for ii in range(0, 3):
+                        if data[i][Books.fields[ii]] is not None:       # Accounting for potentially missing data
+                                data_statement += f'{data[i][Books.fields[ii]] : <40}'
+                        else:
+                                pass
+                print(data_statement)
+
+
 def query_user_4_input(Books):
         print(f'\nYou are now adding a new entry to the {Books.name} Table')
         books = []
@@ -101,6 +120,7 @@ def run_UI(Books, Members, BookLoans):
                                    f'\n9: Check-out a Book'
                                    f'\n10: Check-in a Book'
                                    f'\n11: Check the Current Loans for a Given Member'
+                                   f'\n12: See all current Loans'
                                    f'\nPlease Make Your Entry: ')
 
                 if User_Input == 'Quit':
@@ -146,7 +166,16 @@ def run_UI(Books, Members, BookLoans):
                 elif User_Input == '11':
                         check_User = input('Please enter a MemberID to see current Loans: ')
                         data = Books.checkLoans(check_User)
-                        displayData(data, Books)
+                        displayLoans(data, Books)
+
+                elif User_Input == '12':
+                        Member_data = Members.getAllData()
+                        for row in Member_data:
+                                check_User = str(row['MemberId'])
+                                data = Books.checkLoans(check_User)
+                                displayLoans(data, Books)
+                                print(data)
+
 
 
 def edit_entry(Books):
@@ -203,6 +232,7 @@ def book_checkout(Books, Members, BookLoans):
         # [Books.fields[4]] # all of that is just equivalent to '[Available]' will need database function to change
         # that you fool, something like an editData with only the 'Available section filled?' (NEW edit function which
         # only changes available will do the trick).
+        Books.editAvailable(-1, BookID)
 
         print(f'{BookName} (BookId: {BookID}) has been checked out by'
               f' {MemberForeName} {MemberSurName} (MemberId: {MemberID})')
@@ -214,11 +244,12 @@ def book_checkin(Books, Members, BookLoans):
         MemberSurName = Members.findMatchingID(MemberID)[0][Members.fields[2]]
         print(f"\nBooks currently checked out by {MemberForeName} {MemberSurName}")
         data = Books.checkLoans(MemberID)
-        displayData(data, Books)
+        displayLoans(data, Books)
 
         BookID = input('Please enter the ID of the book being returned: ')
         BookLoans.deleteLine(BookID, MemberID)
         print(Books.fields[4])
+        Books.editAvailable(1, BookID)
 
 
 def main():

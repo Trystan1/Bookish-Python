@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Library: Homepage{% endblock %}
+{% block content %}
+<div class="container body-content">
+        <h1>Check-In Book Form</h1>
+    <p></p>
+    <div>
+        <h3>Current Loans</h3>
+    </div>
+    <div class="scrollable">
+  <table>
+      <tr>
+          {% for key in Loan_data[0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+      </tr>
+      {% for line in Loan_data %}
+            <tr>
+                {% for key in Loan_data[0] %}
+                    <td> {{line[key]}}</td>
+                {% endfor %}
+            </tr>
+      {% endfor %}
+
+  </table>
+</div>
+<div>Please enter the ID of the Book being returned</div>
+    <div class="parent">
+                <fieldset>
+                        <form action="/2" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Book ID: </legend>
+                                <input type="text" name="BookID">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Submit" />
+                                <input type="hidden" name="MemberID" value="{{MemberID}}">
+                        </div>
+                        </form>
+                </fieldset>
+        </div>
+
+</div>
+{% endblock %}

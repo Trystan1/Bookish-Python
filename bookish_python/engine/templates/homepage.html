@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Home page{% endblock %}
+{% block title %}Library: Homepage{% endblock %}
 {% block content %}
 <div class="container body-content">
     <div class="jumbotron">
@@ -10,6 +10,48 @@
     <div>
         <h3>Current Loans</h3>
     </div>
+    <div class="scrollable">
+  <table>
+      <tr>
+          {% for key in Loan_data[0][0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+      </tr>
+
+      {% for i in range(0 , Loan_data | length) %}
+          {% for line in Loan_data[i] %}
+                <tr>
+                    {% for key in Loan_data[0][0] %}
+                        <td> {{line[key]}}</td>
+                    {% endfor %}
+                </tr>
+          {% endfor %}
+      {% endfor %}
+
+  </table>
+</div>
+
+<p></p>
+    <div>Please enter the ID of the Member checking in a Book or click checkout</div>
+        <div class="parent">
+                <fieldset>
+                        <form action="/checkin" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Member ID: </legend>
+                                <input type="text" name="MemberID">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Check-in Book" />
+                        </div>
+                        </form>
+                </fieldset>
+            <p></p>
+                <div class="child inline-block-child">
+                <form action="/checkout" method="get">
+                        <input type="submit" value="Check-out Book" />
+                </form>
+                </div>
+        </div>
 
 </div>
 {% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Library: Homepage{% endblock %}
+{% block content %}
+<div class="container body-content">
+        <h1>Check-Out Book Form</h1>
+    <p></p>
+
+    <div class="scrollable">
+      <table>
+          <tr>
+              {% for key in Book_data[0] %}
+              <th>{{key}}</th>
+              {% endfor %}
+          </tr>
+
+        {% for line in Book_data %}
+        <tr>
+            {% for key in Book_data[0] %}
+          <td> {{line[key]}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+
+
+<div>Please enter the ID of the Book being checked out and the ID of the Member being checked out to</div>
+    <div class="parent">
+                <fieldset>
+                        <form action="/3" method="get">
+                        <div class="child inline-block-child">
+                                <legend>Book ID: </legend>
+                                <input type="text" name="BookID">
+                        </div>
+                        <div class="child inline-block-child">
+                            <legend>Member ID: </legend>
+                            <input type="text" name="MemberID">
+                        </div>
+                         <div class="child inline-block-child">
+                                <input type="submit" value="Submit" />
+                        </div>
+                        </form>
+                </fieldset>
+        </div>
+
+</div>
+
+</div>
+{% endblock %}
